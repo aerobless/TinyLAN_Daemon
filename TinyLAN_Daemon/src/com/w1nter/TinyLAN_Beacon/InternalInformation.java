@@ -5,10 +5,6 @@ import java.net.UnknownHostException;
 
 public class InternalInformation {
 
-	public InternalInformation() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public String getHostName(){
 		String hostname = "Unknown";
 		try{
@@ -20,5 +16,16 @@ public class InternalInformation {
 		}
 		return hostname;
 	}
-
+	
+	public String getLocalIP(){
+		String ip = "unkown";
+		try {
+			ip = InetAddress.getLocalHost().toString();
+		} catch (UnknownHostException e) {
+			BeaconMain.log("UnknownHostException", e);
+		}
+		return ip;
+	}
+	
+	
 }

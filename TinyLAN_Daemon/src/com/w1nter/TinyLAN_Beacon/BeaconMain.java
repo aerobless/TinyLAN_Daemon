@@ -18,9 +18,17 @@ public class BeaconMain {
 		while(enabled){
 			NetworkReport report = new NetworkReport();
 			
+			//Add beacon info
 			report.setBeaconName(internal.getHostName());
+			report.setBeaconIP(internal.getLocalIP());
 			report = external.addInfoToReport(report);
 			
+			//Add device info
+			
+			
+			//Submit info
+			
+			//Wait for next cycle
 			sleepInSeconds(5);
 		}
 	}
