@@ -2,30 +2,21 @@ package com.w1nter.TinyLAN_Beacon;
 
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import com.w1nter.TinyLAN_Beacon.ExternalInformationSource;
+import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
 public class Tests {
 	ExternalInformationSource tracker = new ExternalInformationSource();
 
 	@Test
 	public void testGetIP(){
-		String ip = null;
-		try {
-			ip = tracker.getIP();
-		} catch (ParserConfigurationException | SAXException | IOException anEx) {
-			anEx.printStackTrace();
+		NetworkReport report = new NetworkReport();
+		report = tracker.insertExternalInformation(report);
+
+		if(!(report.getNetworkInternetIP().length()>0 && report.getNetworkInternetIP() != null)){
 			fail();
 		}
-		if(!(ip.length()>0 && ip != null)){
-			fail();
-		}
-		System.out.println("IP Demo: "+ip);
+		System.out.println("IP Demo: "+report.getNetworkInternetIP());
 	}
 }

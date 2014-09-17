@@ -15,6 +15,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
+
 public class ExternalInformationSource {
 	
 	/**
@@ -48,23 +50,16 @@ public class ExternalInformationSource {
 		return result;
 	}
 	
-	public String getIP() throws ParserConfigurationException, SAXException, IOException{
-		Document locationInfo = downloadLocationInfo();
-		return locationInfo.getElementsByTagName("Ip").item(0).getTextContent();
-	}
-	
-	public String getCity() throws ParserConfigurationException, SAXException, IOException{
-		Document locationInfo = downloadLocationInfo();
-		return locationInfo.getElementsByTagName("City").item(0).getTextContent();
-	}
-	
-	public String getRegion() throws ParserConfigurationException, SAXException, IOException{
-		Document locationInfo = downloadLocationInfo();
-		return locationInfo.getElementsByTagName("RegionName").item(0).getTextContent();
-	}
-	
-	public String getCountry() throws ParserConfigurationException, SAXException, IOException{
-		Document locationInfo = downloadLocationInfo();
-		return locationInfo.getElementsByTagName("CountryName").item(0).getTextContent();
+	public NetworkReport insertExternalInformation(NetworkReport report){
+		try {
+			Document info = downloadLocationInfo();
+			report.setNetworkInternetIP(info.getElementsByTagName("Ip").item(0).getTextContent());
+			report.setBeaconCity(info.getElementsByTagName("City").item(0).getTextContent());
+			report.setBeaconRegion(info.getElementsByTagName("RegionName").item(0).getTextContent());
+			report.setBeaconCountry(info.getElementsByTagName("CountryName").item(0).getTextContent());
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			BeaconMain.log("Error while trying to insertExternalInfo in ExternalInfoSource", e);
+		}
+		return report;		
 	}
 }

@@ -1,10 +1,6 @@
 package com.w1nter.TinyLAN_Beacon;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
+import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
 /**
  * A tiny java daemon that keeps track of a local network and
@@ -20,11 +16,9 @@ public class BeaconMain {
 	public static void main(String args[]) {
 		log("TinyLAN Daemon starting...");
 		while(enabled){
-			try {
-				System.out.println(tracker.getIP());
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				log("Error while trying to get information from the external source..", e);
-			}
+			NetworkReport report = new NetworkReport();
+			
+			report = tracker.insertExternalInformation(report);
 			
 			sleepInSeconds(5);
 		}
