@@ -43,8 +43,13 @@ public class TowerServlet extends HttpServlet {
 			out.println("beacons yet.. please make sure that at least one beacon is running :)!");
 		} else {
 			for(int i=0; i<reportList.size(); i++){
-				out.println(reportList.get(i).getNetworkInternetIP());
-				out.println(reportList.get(i).getBeaconCity());
+				out.println("----<<"+reportList.get(i).getBeaconName()+">>----");
+				out.println("  Global IP: "+reportList.get(i).getNetworkInternetIP());
+				out.println("   Local IP: "+reportList.get(i).getBeaconIP());
+				out.println("       City: "+reportList.get(i).getBeaconCity());
+				out.println("     Region: "+reportList.get(i).getBeaconRegion());
+				out.println("    Country: "+reportList.get(i).getBeaconCountry());
+				out.println();
 			}
 		}
 		
