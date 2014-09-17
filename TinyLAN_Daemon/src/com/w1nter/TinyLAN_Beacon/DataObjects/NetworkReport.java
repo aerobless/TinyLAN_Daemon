@@ -13,7 +13,7 @@ public class NetworkReport implements Serializable{
 	private String beaconRegion;
 	private String beaconCountry;
 	
-	private ArrayList<DeviceStatus> deviceList;
+	private ArrayList<DeviceStatus> deviceList = new ArrayList<DeviceStatus>();
 
 	/**
 	 * @return the networkInternetIP

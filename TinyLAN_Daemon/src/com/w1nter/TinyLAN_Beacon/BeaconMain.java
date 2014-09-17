@@ -1,5 +1,12 @@
 package com.w1nter.TinyLAN_Beacon;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
 import com.w1nter.TinyLAN_Beacon.DataObjects.DeviceStatus;
 import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
@@ -29,7 +36,30 @@ public class BeaconMain {
 			report.addDevice(new DeviceStatus("Test Device", "192.0.0.1", true));
 			
 			//Submit info
-			
+			try {
+				Socket server = new Socket("localhost", 8989); //TODO: get from config.
+				
+		    	OutputStream os = server.getOutputStream();  
+		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
+		
+				oos.writeObject(report);
+				
+				InputStream is = server.getInputStream();  
+	        	ObjectInputStream ois = new ObjectInputStream(is);
+				try {
+					String response = (String)ois.readObject();
+				    log(response);
+				} catch (ClassNotFoundException anEx) {
+					// TODO Auto-generated catch block
+					anEx.printStackTrace();
+				}
+
+		    	oos.close();  
+		    	os.close();  
+		    	server.close();
+			} catch (IOException anEx) {
+				log("IOException while trying to communicate with tower.");
+			}
 			
 			//Wait for next cycle
 			sleepInSeconds(5);
