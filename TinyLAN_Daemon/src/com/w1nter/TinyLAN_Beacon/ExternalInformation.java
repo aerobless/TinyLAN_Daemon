@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
-public class ExternalInformationSource {
+public class ExternalInformation {
 	
 	/**
 	 * Downloads a website and returns a string containing the html
@@ -50,7 +50,7 @@ public class ExternalInformationSource {
 		return result;
 	}
 	
-	public NetworkReport insertExternalInformation(NetworkReport report){
+	public NetworkReport addInfoToReport(NetworkReport report){
 		try {
 			Document info = downloadLocationInfo();
 			report.setNetworkInternetIP(info.getElementsByTagName("Ip").item(0).getTextContent());

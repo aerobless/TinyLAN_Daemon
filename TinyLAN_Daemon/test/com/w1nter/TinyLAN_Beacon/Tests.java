@@ -7,16 +7,27 @@ import org.junit.Test;
 import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
 public class Tests {
-	ExternalInformationSource tracker = new ExternalInformationSource();
+	ExternalInformation external = new ExternalInformation();
+	InternalInformation internal = new InternalInformation();
 
 	@Test
 	public void testGetIP(){
 		NetworkReport report = new NetworkReport();
-		report = tracker.insertExternalInformation(report);
+		report = external.addInfoToReport(report);
 
 		if(!(report.getNetworkInternetIP().length()>0 && report.getNetworkInternetIP() != null)){
 			fail();
 		}
 		System.out.println("IP Demo: "+report.getNetworkInternetIP());
+	}
+	
+	@Test
+	public void testGettingHostname(){
+		String hostname = internal.getHostName();
+		if(hostname.equals("Unkown")){
+			System.out.println("FAIL: Hostname unkown..");
+			fail();
+		}
+		System.out.println("Hostname Demo: "+hostname);
 	}
 }

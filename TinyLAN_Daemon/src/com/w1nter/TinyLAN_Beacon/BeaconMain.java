@@ -10,15 +10,16 @@ import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
  */
 public class BeaconMain {
 	static boolean enabled = true;
-	static ExternalInformationSource tracker = new ExternalInformationSource();
-	
+	static InternalInformation internal = new InternalInformation();
+	static ExternalInformation external = new ExternalInformation();
 	
 	public static void main(String args[]) {
 		log("TinyLAN Daemon starting...");
 		while(enabled){
 			NetworkReport report = new NetworkReport();
 			
-			report = tracker.insertExternalInformation(report);
+			report.setBeaconName(internal.getHostName());
+			report = external.addInfoToReport(report);
 			
 			sleepInSeconds(5);
 		}
