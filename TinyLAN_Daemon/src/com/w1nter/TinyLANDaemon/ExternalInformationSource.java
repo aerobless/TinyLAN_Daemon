@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class InformationTracker {
+public class ExternalInformationSource {
 	
 	/**
 	 * Downloads a website and returns a string containing the html
@@ -46,7 +46,6 @@ public class InformationTracker {
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document result = documentBuilder.parse(stream);
 		return result;
-
 	}
 	
 	public String getIP() throws ParserConfigurationException, SAXException, IOException{

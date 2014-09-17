@@ -1,4 +1,4 @@
-package com.w1nter.TinyLANDaemon;
+package com.w1nter.TinyLANDaemon.Beacon;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-
+import com.w1nter.TinyLANDaemon.ExternalInformationSource;
 
 /**
  * A tiny java daemon that keeps track of a local network and
@@ -14,9 +14,9 @@ import org.xml.sax.SAXException;
  * 
  * @author Theo Winter
  */
-public class MainDaemon {
+public class BeaconMain {
 	static boolean enabled = true;
-	static InformationTracker tracker = new InformationTracker();
+	static ExternalInformationSource tracker = new ExternalInformationSource();
 	
 	
 	public static void main(String args[]) {
@@ -28,18 +28,18 @@ public class MainDaemon {
 				log("Error while trying to get information from the external source..", e);
 			}
 			
-			//Temp
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException anEx) {
-				// TODO Auto-generated catch block
-				anEx.printStackTrace();
-			}
+			sleepInSeconds(5);
 		}
 	}
-	
-	
-	
+
+	private static void sleepInSeconds(int sec) {
+		try {
+			Thread.sleep(sec*1000);
+		} catch (InterruptedException e) {
+			log("Interrupted while trying to sleep", e);
+		}
+	}
+
 	public static void log(String s){
 		System.out.println(s);
 	}

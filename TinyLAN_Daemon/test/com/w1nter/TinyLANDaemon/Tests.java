@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 public class Tests {
-	InformationTracker tracker = new InformationTracker();
+	ExternalInformationSource tracker = new ExternalInformationSource();
 
 	@Test
 	public void testGetIP(){
