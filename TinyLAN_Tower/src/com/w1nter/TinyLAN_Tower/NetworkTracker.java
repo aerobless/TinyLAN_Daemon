@@ -26,6 +26,7 @@ public class NetworkTracker extends Thread {
 		        
 		        InputStream is = client.getInputStream();
 				ObjectInputStream ois = new ObjectInputStream(is);
+				log("Waiting for beacon");
 				
 				//Get report & store it
 				try {
@@ -34,11 +35,13 @@ public class NetworkTracker extends Thread {
 				} catch (ClassNotFoundException e) {
 					log("NetworkReport Class not found", e);
 				}
+				log("Got beacon and stored it");
 				
 				//Send Response
 				OutputStream os = client.getOutputStream();  
 				ObjectOutputStream oos = new ObjectOutputStream(os); 
 				oos.writeObject("333 THX");
+				log("thxed it");
 
 				oos.close();  
 				os.close();  	
@@ -57,11 +60,17 @@ public class NetworkTracker extends Thread {
 	}
 
 	private void addReport(NetworkReport networkReportFromClient) {
-		for(int i = 0; i<reportList.size(); i++){
-			if(beaconExists(networkReportFromClient, i)){
-				reportList.set(i, networkReportFromClient);
-			} else {
-				reportList.add(networkReportFromClient);
+		if(reportList.size()==0){
+			reportList.add(networkReportFromClient);
+		} else {
+			for(int i = 0; i<reportList.size(); i++){
+				if(beaconExists(networkReportFromClient, i)){
+					reportList.set(i, networkReportFromClient);
+				} else {
+					reportList.add(networkReportFromClient);
+				}
+				System.out.println("added report");
+				System.out.println(networkReportFromClient.getBeaconCity());
 			}
 		}
 	}
