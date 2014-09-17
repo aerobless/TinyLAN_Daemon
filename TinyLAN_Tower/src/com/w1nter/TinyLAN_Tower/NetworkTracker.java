@@ -18,6 +18,7 @@ public class NetworkTracker extends Thread {
 	public void run() {
 		ServerSocket server = null;
 		try {
+			//TODO: read from config
 		    server = new ServerSocket(8989);
 			
 		    while (true) {
@@ -30,9 +31,8 @@ public class NetworkTracker extends Thread {
 				try {
 					NetworkReport networkReportFromClient = (NetworkReport) ois.readObject();
 					addReport(networkReportFromClient);
-				} catch (ClassNotFoundException anEx) {
-					// TODO Auto-generated catch block
-					anEx.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					log("NetworkReport Class not found", e);
 				}
 				
 				//Send Response
@@ -77,5 +77,8 @@ public class NetworkTracker extends Thread {
 	public void log(String s, Exception e){
 		System.out.println(s+ e.getMessage());
 	}
-
+	
+	public synchronized ArrayList<NetworkReport> getReports(){
+		return reportList;
+	}
 }
