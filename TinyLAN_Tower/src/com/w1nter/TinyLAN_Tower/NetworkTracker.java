@@ -1,7 +1,10 @@
 package com.w1nter.TinyLAN_Tower;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -9,23 +12,62 @@ import java.util.ArrayList;
 import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
 public class NetworkTracker extends Thread {
-	ArrayList<NetworkReport> reportList;
-
+	ArrayList<NetworkReport> reportList = new ArrayList<NetworkReport>();
+	
 	@Override
 	public void run() {
+		ServerSocket server = null;
 		try {
-		    ServerSocket server = new ServerSocket(8989);
+		    server = new ServerSocket(8989);
 			
 		    while (true) {
 		        Socket client = server.accept();
-	
-		        //answer to client
-		        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-		        out.println("333 OK");
+		        
+		        InputStream is = client.getInputStream();
+				ObjectInputStream ois = new ObjectInputStream(is);
+				
+				//Get report & store it
+				try {
+					NetworkReport networkReportFromClient = (NetworkReport) ois.readObject();
+					addReport(networkReportFromClient);
+				} catch (ClassNotFoundException anEx) {
+					// TODO Auto-generated catch block
+					anEx.printStackTrace();
+				}
+				
+				//Send Response
+				OutputStream os = client.getOutputStream();  
+				ObjectOutputStream oos = new ObjectOutputStream(os); 
+				oos.writeObject("333 THX");
+
+				oos.close();  
+				os.close();  	
+				is.close();  
+				client.close();
 		    }
 		} catch (IOException e) {
 			log("IOException in NetworkTracker Server", e);
+		} finally {
+			try {
+				server.close();
+			} catch (IOException e) {
+				log("IOException while trying to close the server connection..", e);
+			}
 		}
+	}
+
+	private void addReport(NetworkReport networkReportFromClient) {
+		for(int i = 0; i<reportList.size(); i++){
+			if(beaconExists(networkReportFromClient, i)){
+				reportList.set(i, networkReportFromClient);
+			} else {
+				reportList.add(networkReportFromClient);
+			}
+		}
+	}
+
+	private boolean beaconExists(NetworkReport networkReportFromClient, int i) {
+		return reportList.get(i).getBeaconName().equals(networkReportFromClient.getBeaconName());
 	}
 
 	public void log(String s){
