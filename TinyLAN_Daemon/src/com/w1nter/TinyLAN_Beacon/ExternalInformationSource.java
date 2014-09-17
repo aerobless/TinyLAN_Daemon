@@ -67,10 +67,4 @@ public class ExternalInformationSource {
 		Document locationInfo = downloadLocationInfo();
 		return locationInfo.getElementsByTagName("CountryName").item(0).getTextContent();
 	}
-	
-	public String getPostal() throws ParserConfigurationException, SAXException, IOException{
-		Document locationInfo = downloadLocationInfo();
-		return locationInfo.getElementsByTagName("ZipCode").item(0).getTextContent();
-	}
-
 }
