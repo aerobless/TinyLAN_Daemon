@@ -1,12 +1,10 @@
-package com.w1nter.TinyLANDaemon.Beacon;
+package com.w1nter.TinyLAN_Beacon;
 
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
-
-import com.w1nter.TinyLANDaemon.ExternalInformationSource;
 
 /**
  * A tiny java daemon that keeps track of a local network and

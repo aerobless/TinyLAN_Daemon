@@ -1,4 +1,4 @@
-package com.w1nter.TinyLANDaemon;
+package com.w1nter.TinyLAN_Beacon;
 
 import static org.junit.Assert.fail;
 
@@ -8,6 +8,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
+import com.w1nter.TinyLAN_Beacon.ExternalInformationSource;
 
 public class Tests {
 	ExternalInformationSource tracker = new ExternalInformationSource();

@@ -1,4 +1,4 @@
-package com.w1nter.TinyLANDaemon;
+package com.w1nter.TinyLAN_Beacon;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
