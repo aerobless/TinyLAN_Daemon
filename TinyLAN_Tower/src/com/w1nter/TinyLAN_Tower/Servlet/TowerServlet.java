@@ -37,22 +37,31 @@ public class TowerServlet extends HttpServlet {
 
 		ArrayList<NetworkReport> reportList = tracker.getReports();
 		if(reportList.size()==0){
-			System.out.println("empty reportlist");
-			out.println("Tower Servlet:");
-			out.println("Everything seems to be working, but the tower hasn't received any reports from the");
-			out.println("beacons yet.. please make sure that at least one beacon is running :)!");
+			printEmptyReportListError(out);
 		} else {
-			for(int i=0; i<reportList.size(); i++){
-				out.println("----<<"+reportList.get(i).getBeaconName()+">>----");
-				out.println("  Global IP: "+reportList.get(i).getNetworkInternetIP());
-				out.println("   Local IP: "+reportList.get(i).getBeaconIP());
-				out.println("       City: "+reportList.get(i).getBeaconCity());
-				out.println("     Region: "+reportList.get(i).getBeaconRegion());
-				out.println("    Country: "+reportList.get(i).getBeaconCountry());
-				out.println();
-			}
+			printLANStatusAsText(out, reportList);
 		}
 		
+	}
+
+	private void printEmptyReportListError(PrintWriter out) {
+		System.out.println("empty reportlist");
+		out.println("Tower Servlet:");
+		out.println("Everything seems to be working, but the tower hasn't received any reports from the");
+		out.println("beacons yet.. please make sure that at least one beacon is running :)!");
+	}
+
+	private void printLANStatusAsText(PrintWriter out,
+			ArrayList<NetworkReport> reportList) {
+		for(int i=0; i<reportList.size(); i++){
+			out.println("----<<"+reportList.get(i).getBeaconName()+">>----");
+			out.println("  Global IP: "+reportList.get(i).getNetworkInternetIP());
+			out.println("   Local IP: "+reportList.get(i).getBeaconIP());
+			out.println("       City: "+reportList.get(i).getBeaconCity());
+			out.println("     Region: "+reportList.get(i).getBeaconRegion());
+			out.println("    Country: "+reportList.get(i).getBeaconCountry());
+			out.println();
+		}
 	}
 
 	/**
