@@ -12,7 +12,7 @@ public class Tests {
 
 	@Test
 	public void testGetIP(){
-		NetworkReport report = new NetworkReport();
+		NetworkReport report = new NetworkReport("127.0.0.1", "TestLAN", 0);
 		report = external.addInfoToReport(report);
 
 		if(!(report.getNetworkInternetIP().length()>0 && report.getNetworkInternetIP() != null)){

@@ -13,6 +13,22 @@ public class NetworkReport implements Serializable{
 	private String beaconRegion;
 	private String beaconCountry;
 	
+	private long unixTime;	
+	
+	/**
+	 * Creates a new instance of this class.
+	 *
+	 * @param aBeaconIP
+	 * @param aBeaconName
+	 * @param aUnixTime
+	 */
+	public NetworkReport(String aBeaconIP, String aBeaconName, long aUnixTime) {
+		super();
+		beaconIP = aBeaconIP;
+		beaconName = aBeaconName;
+		unixTime = aUnixTime;
+	}
+
 	private ArrayList<DeviceStatus> deviceList = new ArrayList<DeviceStatus>();
 
 	/**
@@ -37,24 +53,10 @@ public class NetworkReport implements Serializable{
 	}
 
 	/**
-	 * @param aBeaconIP the beaconIP to set
-	 */
-	public final void setBeaconIP(String aBeaconIP) {
-		beaconIP = aBeaconIP;
-	}
-
-	/**
 	 * @return the beaconName
 	 */
 	public final String getBeaconName() {
 		return beaconName;
-	}
-
-	/**
-	 * @param aBeaconName the beaconName to set
-	 */
-	public final void setBeaconName(String aBeaconName) {
-		beaconName = aBeaconName;
 	}
 
 	/**
@@ -111,6 +113,13 @@ public class NetworkReport implements Serializable{
 	 */
 	public final ArrayList<DeviceStatus> getDeviceList(){
 		return deviceList;
+	}
+
+	/**
+	 * @return the unixTime
+	 */
+	public final long getUnixTime() {
+		return unixTime;
 	}
 	
 }

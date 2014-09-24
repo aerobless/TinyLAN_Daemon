@@ -23,16 +23,16 @@ public class BeaconMain {
 	public static void main(String args[]) {
 		log("TinyLAN Daemon starting...");
 		while(enabled){
-			NetworkReport report = new NetworkReport();
+			
+			long unixTime = System.currentTimeMillis() / 1000L;
+			NetworkReport report = new NetworkReport(internal.getLocalIP(), internal.getHostName(), unixTime);
 			
 			//Add beacon info
-			report.setBeaconName(internal.getHostName());
-			report.setBeaconIP(internal.getLocalIP());
 			report = external.addInfoToReport(report);
 			
 			//Add device info
 			//TODO: gather data of real network devices
-			report.addDevice(internal.getDeviceStatus("192.168.0.1"));
+			report.addDevice(internal.getDeviceStatus("127.0.0.1"));
 			
 			//Submit info
 			try {
@@ -59,7 +59,6 @@ public class BeaconMain {
 			} catch (IOException anEx) {
 				log("IOException while trying to communicate with tower.");
 			}
-			
 			//Wait for next cycle
 			sleepInSeconds(5);
 		}
