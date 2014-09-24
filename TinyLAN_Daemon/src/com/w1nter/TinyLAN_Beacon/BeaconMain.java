@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.w1nter.TinyLAN_Beacon.DataObjects.DeviceStatus;
 import com.w1nter.TinyLAN_Beacon.DataObjects.NetworkReport;
 
 /**
@@ -33,7 +32,7 @@ public class BeaconMain {
 			
 			//Add device info
 			//TODO: gather data of real network devices
-			report.addDevice(new DeviceStatus("Test Device", "192.0.0.1", true));
+			report.addDevice(internal.getDeviceStatus("192.168.0.1"));
 			
 			//Submit info
 			try {

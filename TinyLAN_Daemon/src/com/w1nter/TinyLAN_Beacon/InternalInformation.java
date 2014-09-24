@@ -1,7 +1,10 @@
 package com.w1nter.TinyLAN_Beacon;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import com.w1nter.TinyLAN_Beacon.DataObjects.DeviceStatus;
 
 public class InternalInformation {
 
@@ -27,5 +30,15 @@ public class InternalInformation {
 		return ip;
 	}
 	
-	
+	public DeviceStatus getDeviceStatus(String ip){
+		boolean reachable = false;
+		String hostname = "unknown";
+		try {
+			reachable = InetAddress.getByName(ip).isReachable(100);
+			hostname =InetAddress.getByName(ip).getHostName();
+		} catch (IOException e) {
+			BeaconMain.log("IOException while trying to get the DeviceStatus of: "+ip, e);
+		}
+		return new DeviceStatus(hostname, ip, reachable);
+	}	
 }
